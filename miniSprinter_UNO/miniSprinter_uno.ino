@@ -1595,60 +1595,7 @@ void do_step(int axis)
 }
 
 #define HEAT_INTERVAL 250
-#ifdef HEATER_USES_MAX6675
-unsigned long max6675_previous_millis = 0;
-int max6675_temp = 2000;
 
-int read_max6675()
-{
-    if (millis() - max6675_previous_millis < HEAT_INTERVAL)
-        return max6675_temp;
-
-    max6675_previous_millis = millis();
-
-    max6675_temp = 0;
-
-#ifdef  PRR
-    PRR &= ~(1 << PRSPI);
-#elif defined PRR0
-    PRR0 &= ~(1 << PRSPI);
-#endif
-
-    SPCR = (1 << MSTR) | (1 << SPE) | (1 << SPR0);
-
-    // enable TT_MAX6675
-    WRITE(MAX6675_SS, 0);
-
-    // ensure 100ns delay - a bit extra is fine
-    delay(1);
-
-    // read MSB
-    SPDR = 0;
-    for (; (SPSR & (1 << SPIF)) == 0;);
-    max6675_temp = SPDR;
-    max6675_temp <<= 8;
-
-    // read LSB
-    SPDR = 0;
-    for (; (SPSR & (1 << SPIF)) == 0;);
-    max6675_temp |= SPDR;
-
-    // disable TT_MAX6675
-    WRITE(MAX6675_SS, 1);
-
-    if (max6675_temp & 4)
-    {
-        // thermocouple open
-        max6675_temp = 2000;
-    }
-    else
-    {
-        max6675_temp = max6675_temp >> 3;
-    }
-
-    return max6675_temp;
-}
-#endif
 
 void reset_status()
 {
@@ -1676,6 +1623,8 @@ void wait_for_temp()
         watchmillis = 0;
     }
 #endif
+
+
     codenum = millis();
     while ((current_raw < target_raw) && (status == STATUS_OK))
     {
@@ -1694,6 +1643,7 @@ void manage_heater()
     if((millis() - previous_millis_heater) < HEATER_CHECK_INTERVAL )
         return;
     previous_millis_heater = millis();
+    
 #ifdef HEATER_USES_THERMISTOR
     current_raw = analogRead(TEMP_0_PIN);
 #ifdef DEBUG_HEAT_MGMT
