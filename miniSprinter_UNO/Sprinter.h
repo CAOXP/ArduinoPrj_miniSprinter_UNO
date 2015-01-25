@@ -21,7 +21,7 @@ void reset_status();
 
 
 void manage_heater();
-void wait_for_temp();
+
 int temp2analogu(int celsius, const short table[][2], int numtemps, int source);
 int analog2tempu(int raw, const short table[][2], int numtemps, int source);
 #ifdef HEATER_USES_THERMISTOR
