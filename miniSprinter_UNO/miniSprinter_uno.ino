@@ -1196,14 +1196,14 @@ void prepare_move()
     {
         if (destination[0] < 0) destination[0] = 0.0;
         if (destination[1] < 0) destination[1] = 0.0;
-        if (destination[2] < 0) destination[2] = 0.0;
+        // if (destination[2] < 0) destination[2] = 0.0;
     }
 
     if (max_software_endstops)
     {
         if (destination[0] > X_MAX_LENGTH) destination[0] = X_MAX_LENGTH;
         if (destination[1] > Y_MAX_LENGTH) destination[1] = Y_MAX_LENGTH;
-        if (destination[2] > Z_MAX_LENGTH) destination[2] = Z_MAX_LENGTH;
+        // if (destination[2] > Z_MAX_LENGTH) destination[2] = Z_MAX_LENGTH;
     }
 
     for(int i = 0; i < NUM_AXIS; i++)
