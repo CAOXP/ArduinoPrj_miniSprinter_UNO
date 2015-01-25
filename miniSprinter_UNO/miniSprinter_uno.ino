@@ -64,7 +64,7 @@ int led_counter = 0;
 
 //Stepper Movement Variables
 
-char axis_codes[NUM_AXIS] = {'X', 'Y', 'Z', 'E'};
+char axis_codes[NUM_AXIS] = {'X', 'Y'};
 bool move_direction[NUM_AXIS];
 unsigned long axis_previous_micros[NUM_AXIS];
 unsigned long previous_micros = 0, previous_millis_heater, previous_millis_bed_heater;
@@ -78,8 +78,8 @@ unsigned long steps_per_sqr_second, plateau_steps;
 #endif
 boolean acceleration_enabled = false, accelerating = false;
 unsigned long interval;
-float destination[NUM_AXIS] = {0.0, 0.0, 0.0, 0.0};
-float current_position[NUM_AXIS] = {0.0, 0.0, 0.0, 0.0};
+float destination[NUM_AXIS] = {0.0, 0.0 };
+float current_position[NUM_AXIS] = {0.0, 0.0 };
 unsigned long steps_taken[NUM_AXIS];
 long axis_interval[NUM_AXIS]; // for speed delay
 bool home_all_axis = true;
@@ -91,7 +91,8 @@ bool relative_mode_e = false;  //Determines Absolute or Relative E Codes while i
 long timediff = 0;
 //experimental feedrate calc
 float d = 0;
-float axis_diff[NUM_AXIS] = {0, 0, 0, 0};
+float axis_diff[NUM_AXIS] = {0, 0};
+
 #ifdef STEP_DELAY_RATIO
 long long_step_delay_ratio = STEP_DELAY_RATIO * 100;
 #endif
@@ -1580,18 +1581,18 @@ void do_step(int axis)
     case 1:
         WRITE(Y_STEP_PIN, HIGH);
         break;
-    case 2:
-        WRITE(Z_STEP_PIN, HIGH);
-        break;
-    case 3:
-        WRITE(E_STEP_PIN, HIGH);
-        break;
+    // case 2:
+    //     WRITE(Z_STEP_PIN, HIGH);
+    //     break;
+    // case 3:
+    //     WRITE(E_STEP_PIN, HIGH);
+    //     break;
     }
     steps_taken[axis] += 1;
     WRITE(X_STEP_PIN, LOW);
     WRITE(Y_STEP_PIN, LOW);
-    WRITE(Z_STEP_PIN, LOW);
-    WRITE(E_STEP_PIN, LOW);
+    // WRITE(Z_STEP_PIN, LOW);
+    // WRITE(E_STEP_PIN, LOW);
 }
 
 #define HEAT_INTERVAL 250
@@ -1643,7 +1644,7 @@ void manage_heater()
     if((millis() - previous_millis_heater) < HEATER_CHECK_INTERVAL )
         return;
     previous_millis_heater = millis();
-    
+
 #ifdef HEATER_USES_THERMISTOR
     current_raw = analogRead(TEMP_0_PIN);
 #ifdef DEBUG_HEAT_MGMT

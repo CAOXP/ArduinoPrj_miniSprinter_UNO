@@ -100,7 +100,9 @@ const int Z_MAX_LENGTH = 100;
 /*#define Z_INCREMENT 0.05*/
 
 //// MOVEMENT SETTINGS
-const int NUM_AXIS = 4; // The axis order in all axis related arrays is X, Y, Z, E
+const int NUM_AXIS = 2; // The axis order in all axis related arrays is X, Y, Z, E
+               //CXP changed for PWDRP
+               
 float max_feedrate[] = {3000, 3000, 200, 10000};
 float homing_feedrate[] = {1500, 1500, 200};
 bool axis_relative_modes[] = {false, false, false, false};
