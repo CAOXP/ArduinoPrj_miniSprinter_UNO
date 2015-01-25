@@ -593,6 +593,14 @@ inline void process_commands()
 #if (defined DISABLE_CHECK_DURING_ACC) || (defined DISABLE_CHECK_DURING_MOVE) || (defined DISABLE_CHECK_DURING_TRAVEL)
             manage_heater();
 #endif
+
+            //如果是Z轴增加的话.单独处理.不再
+            // if (code_seen('Z')) 
+            // {
+            //      addNewLayer()
+            //      return
+            // }
+            
             get_coordinates(); // For X Y Z E F
             prepare_move();
             previous_millis_cmd = millis();
