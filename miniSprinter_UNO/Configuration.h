@@ -14,7 +14,13 @@
 // Gen6 = 5,
 // Sanguinololu up to 1.1 = 6
 // Sanguinololu 1.2 and above, and Melzi = 62
-#define MOTHERBOARD 62
+// #define MOTHERBOARD 62
+//
+// Motherboard DEFINE not been used 
+// PIN defination are listed at the end of this file
+// CXP changed @ 25JAN2015
+
+
 
 //// Thermistor settings:
 // 1 is 100k thermistor
