@@ -455,9 +455,7 @@ inline void get_command()
                     {
                         byte checksum = 0;
                         byte count = 0;
-						
                         while(cmdbuffer[bufindw][count] != '*') checksum = checksum ^ cmdbuffer[bufindw][count++];
-						
                         strchr_pointer = strchr(cmdbuffer[bufindw], '*');
 
                         if( (int)(strtod(&cmdbuffer[bufindw][strchr_pointer - cmdbuffer[bufindw] + 1], NULL)) != checksum)
