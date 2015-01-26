@@ -4,7 +4,7 @@
 #include "fastio.h"
 #include "Configuration.h"
 #include "Sprinter.h"
-#include <EEPROM.h>
+//#include <EEPROM.h>
 
 
 // look here for descriptions of gcodes: http://linuxcnc.org/handbook/gcode/g-code.html
@@ -595,9 +595,11 @@ inline void process_commands()
             manage_heater();
 #endif
 
-            //如果是Z轴增加的话.单独处理.不再
+            //如果是Z轴增加的话.单独处理.不再继续
             // if (code_seen('Z')) 
             // {
+            //      get code_value
+            //      if code_value > 0
             //      addNewLayer()
             //      return
             // }
@@ -672,29 +674,31 @@ inline void process_commands()
                 }
             }
 
-            if((home_all_axis) || (code_seen(axis_codes[2])))
-            {
-                if ((Z_MIN_PIN > -1 && Z_HOME_DIR == -1) || (Z_MAX_PIN > -1 && Z_HOME_DIR == 1))
-                {
-                    current_position[2] = 0;
-                    destination[2] = 1.5 * Z_MAX_LENGTH * Z_HOME_DIR;
-                    feedrate = homing_feedrate[2];
-                    prepare_move();
+            // home Z axis    --CXP commented
+            //
+            // if((home_all_axis) || (code_seen(axis_codes[2])))
+            // {
+            //     if ((Z_MIN_PIN > -1 && Z_HOME_DIR == -1) || (Z_MAX_PIN > -1 && Z_HOME_DIR == 1))
+            //     {
+            //         current_position[2] = 0;
+            //         destination[2] = 1.5 * Z_MAX_LENGTH * Z_HOME_DIR;
+            //         feedrate = homing_feedrate[2];
+            //         prepare_move();
 
-                    current_position[2] = 0;
-                    destination[2] = -2 * Z_HOME_DIR;
-                    prepare_move();
+            //         current_position[2] = 0;
+            //         destination[2] = -2 * Z_HOME_DIR;
+            //         prepare_move();
 
-                    destination[2] = 10 * Z_HOME_DIR;
-                    prepare_move();
+            //         destination[2] = 10 * Z_HOME_DIR;
+            //         prepare_move();
 
-                    current_position[2] = (Z_HOME_DIR == -1) ? (float)byteToint(EEPROM.read(Z_ADJUST_BYTE)) / 100 : Z_MAX_LENGTH;
-                    //current_position[2] = (Z_HOME_DIR == -1) ? 0 : Z_MAX_LENGTH;
-                    //destination[2] = current_position[2];
-                    feedrate = 0;
+            //         current_position[2] = (Z_HOME_DIR == -1) ? (float)byteToint(EEPROM.read(Z_ADJUST_BYTE)) / 100 : Z_MAX_LENGTH;
+            //         //current_position[2] = (Z_HOME_DIR == -1) ? 0 : Z_MAX_LENGTH;
+            //         //destination[2] = current_position[2];
+            //         feedrate = 0;
 
-                }
-            }
+            //     }
+            // }
 
             feedrate = saved_feedrate;
             previous_millis_cmd = millis();
@@ -990,12 +994,16 @@ inline void process_commands()
             SET_INPUT(PS_ON_PIN); //Floating
             break;
 #endif
-        case 82:
-            axis_relative_modes[3] = false;
-            break;
-        case 83:
-            axis_relative_modes[3] = true;
-            break;
+        // cxp commented for 2axis
+        //
+        // case 82:
+        //     axis_relative_modes[3] = false;
+        //     break;
+        // case 83:
+        //     axis_relative_modes[3] = true;
+        //     break;
+        //
+
         case 84:
             if(code_seen('S'))
             {
@@ -1040,10 +1048,11 @@ inline void process_commands()
             Serial.print(current_position[0]);
             Serial.print("Y:");
             Serial.print(current_position[1]);
-            Serial.print("Z:");
-            Serial.print(current_position[2]);
-            Serial.print("E:");
-            Serial.println(current_position[3]);
+            //cxp commentted
+            // Serial.print("Z:");
+            // Serial.print(current_position[2]);
+            // Serial.print("E:");
+            // Serial.println(current_position[3]);
             break;
         case 119: // M119
 #if (X_MIN_PIN > -1)
@@ -1087,12 +1096,14 @@ inline void process_commands()
             }
             break;
 #endif
-        case 203: // M203 - set Z height adjustment
-            if(code_seen('Z'))
-            {
-                EEPROM.write(Z_ADJUST_BYTE, code_value() * 100);
-            }
-            break;
+        // CXP commentted z-adjustment
+        //
+        // case 203: // M203 - set Z height adjustment
+        //     if(code_seen('Z'))
+        //     {
+        //         EEPROM.write(Z_ADJUST_BYTE, code_value() * 100);
+        //     }
+        //     break;
 #ifdef PIDTEMP
         case 301: // M301
             if(code_seen('P')) Kp = code_value();
@@ -1172,8 +1183,10 @@ inline void get_coordinates()
 {
     for(int i = 0; i < NUM_AXIS; i++)
     {
-        if(code_seen(axis_codes[i])) destination[i] = (float)code_value() + (axis_relative_modes[i] || relative_mode) * current_position[i];
-        else destination[i] = current_position[i];                                                       //Are these else lines really needed?
+        if(code_seen(axis_codes[i])) 
+            destination[i] = (float)code_value() + (axis_relative_modes[i] || relative_mode) * current_position[i];
+        else 
+            destination[i] = current_position[i];                                                       //Are these else lines really needed?
     }
     if(code_seen('F'))
     {
@@ -1280,10 +1293,11 @@ inline void linear_move(unsigned long axis_steps_remaining[]) // make linear mov
     else WRITE(X_DIR_PIN, INVERT_X_DIR);
     if (destination[1] > current_position[1]) WRITE(Y_DIR_PIN, !INVERT_Y_DIR);
     else WRITE(Y_DIR_PIN, INVERT_Y_DIR);
-    if (destination[2] > current_position[2]) WRITE(Z_DIR_PIN, !INVERT_Z_DIR);
-    else WRITE(Z_DIR_PIN, INVERT_Z_DIR);
-    if (destination[3] > current_position[3]) WRITE(E_DIR_PIN, !INVERT_E_DIR);
-    else WRITE(E_DIR_PIN, INVERT_E_DIR);
+    // cxp commentted
+    // if (destination[2] > current_position[2]) WRITE(Z_DIR_PIN, !INVERT_Z_DIR);
+    // else WRITE(Z_DIR_PIN, INVERT_Z_DIR);
+    // if (destination[3] > current_position[3]) WRITE(E_DIR_PIN, !INVERT_E_DIR);
+    // else WRITE(E_DIR_PIN, INVERT_E_DIR);
 movereset:
 #if (X_MIN_PIN > -1)
     if(!move_direction[0]) if(READ(X_MIN_PIN) != ENDSTOPS_INVERTING) axis_steps_remaining[0] = 0;

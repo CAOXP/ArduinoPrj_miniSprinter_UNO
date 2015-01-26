@@ -103,9 +103,9 @@ const int Z_MAX_LENGTH = 100;
 const int NUM_AXIS = 2; // The axis order in all axis related arrays is X, Y, Z, E
                //CXP changed for PWDRP
                
-float max_feedrate[] = {3000, 3000, 200, 10000};
-float homing_feedrate[] = {1500, 1500, 200};
-bool axis_relative_modes[] = {false, false, false, false};
+float max_feedrate[] = {3000, 3000};
+float homing_feedrate[] = {1500, 1500};
+bool axis_relative_modes[] = {false, false};
 
 // Min step delay in microseconds. If you are experiencing missing steps, try to raise the delay microseconds, but be aware this
 // If you enable this, make sure STEP_DELAY_RATIO is disabled.
@@ -121,9 +121,9 @@ bool axis_relative_modes[] = {false, false, false, false};
 //// Acceleration settings
 #ifdef RAMP_ACCELERATION
 // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
-float max_start_speed_units_per_second[] = {25.0, 25.0, 0.2, 10.0};
-long max_acceleration_units_per_sq_second[] = {1000, 1000, 50, 250}; // X, Y, Z and E max acceleration in mm/s^2 for printing moves or retracts
-long max_travel_acceleration_units_per_sq_second[] = {500, 500, 50, 500}; // X, Y, Z max acceleration in mm/s^2 for travel moves
+float max_start_speed_units_per_second[] = {25.0, 25.0};
+long max_acceleration_units_per_sq_second[] = {1000, 1000 }; // X, Y, Z and E max acceleration in mm/s^2 for printing moves or retracts
+long max_travel_acceleration_units_per_sq_second[] = {500, 500 }; // X, Y, Z max acceleration in mm/s^2 for travel moves
 #endif
 
 // Machine UUID
@@ -137,13 +137,13 @@ const char uuid[] = "20BA-1127";
 //// PID settings:
 // Uncomment the following line to enable PID support. This is untested and could be disastrous. Be careful.
 //#define PIDTEMP 1
-#ifdef PIDTEMP
-int pid_max = 255; // limits current to nozzle
-int pid_i_max = 80;//130;//125;
-double Kp = 2;//1.10;
-double Ki = 0.01;
-double Kd = 20.0;//0.01;
-#endif
+// #ifdef PIDTEMP
+// int pid_max = 255; // limits current to nozzle
+// int pid_i_max = 80;//130;//125;
+// double Kp = 2;//1.10;
+// double Ki = 0.01;
+// double Kd = 20.0;//0.01;
+// #endif
 
 //M109 target window - machine will deem to have reached target temperature when nozzle reaches Temp = target - NZONE.
 int nzone = 5;//2;
