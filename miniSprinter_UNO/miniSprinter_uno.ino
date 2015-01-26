@@ -100,8 +100,8 @@ long long_step_delay_ratio = STEP_DELAY_RATIO * 100;
 #define Z_ADJUST_BYTE 0
 
 // comm variables
-#define MAX_CMD_SIZE 60
-#define BUFSIZE 6
+#define MAX_CMD_SIZE 		60
+#define BUFSIZE 		6
 char cmdbuffer[BUFSIZE][MAX_CMD_SIZE];
 bool fromsd[BUFSIZE];
 int bufindr = 0;
@@ -122,6 +122,7 @@ int current_raw = 0;
 int target_bed_raw = 0;
 int current_bed_raw = 0;
 int tt = 0, bt = 0;
+
 #ifdef PIDTEMP
 int temp_iState = 0;
 int temp_dState = 0;
@@ -133,16 +134,20 @@ int error;
 int temp_iState_min = -pid_i_max / Ki;
 int temp_iState_max = pid_i_max / Ki;
 #endif
+
 #ifdef SMOOTHING
 uint32_t nma = 0;
 #endif
+
 #ifdef WATCHPERIOD
 int watch_raw = -1000;
 unsigned long watchmillis = 0;
 #endif
+
 #ifdef MINTEMP
 int minttemp = temp2analogh(MINTEMP);
 #endif
+
 #ifdef MAXTEMP
 int maxttemp = temp2analogh(MAXTEMP);
 #endif
