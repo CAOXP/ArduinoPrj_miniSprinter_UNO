@@ -27,8 +27,8 @@
 // 2 is 200k thermistor
 // 3 is mendel-parts thermistor
 // 4 is 10k thermistor
-#define THERMISTORHEATER 1
-#define THERMISTORBED 1
+#define THERMISTORHEATER 0
+#define THERMISTORBED 0
 
 //// Calibration variables
 // X, Y, Z, E steps per unit - Metric Prusa Mendel with Wade extruder:
@@ -92,8 +92,8 @@ const bool min_software_endstops = false; //If true, axis won't move to coordina
 const bool max_software_endstops = true;  //If true, axis won't move to coordinates greater than the defined lengths below.
 
 
-const int X_MAX_LENGTH = 150;
-const int Y_MAX_LENGTH = 150;
+const int X_MAX_LENGTH = 100;
+const int Y_MAX_LENGTH = 100;
 const int Z_MAX_LENGTH = 100;
 
 
@@ -278,7 +278,7 @@ short temptable[NUMTEMPS][2] =
 *
 ****************************************************************************************/
 
-#define X_STEP_PIN         2
+#define X_STEP_PIN         13
 #define X_DIR_PIN          3
 
 #define Y_STEP_PIN         4
