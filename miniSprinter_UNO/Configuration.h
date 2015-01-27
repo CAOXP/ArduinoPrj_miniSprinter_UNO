@@ -43,7 +43,7 @@ float axis_steps_per_unit[] = {85.3333, 85.3333, 2560, 158.8308};
 //// Endstop Settings
 //#define ENDSTOPPULLUPS 1 // Comment this out (using // at the start of the line) to disable the endstop pullup resistors
 // The pullups are needed if you directly connect a mechanical endswitch between the signal and ground pins.
-const bool ENDSTOPS_INVERTING = true; //set to true to invert the logic of the endstops
+const bool ENDSTOPS_INVERTING = false; //set to true to invert the logic of the endstops
 //If your axes are only moving in one direction, make sure the endstops are connected properly.
 //If your axes move in one direction ONLY when the endstops are triggered, set ENDSTOPS_INVERTING to true here
 
@@ -146,15 +146,15 @@ const char uuid[] = "20BA-1127";
 // #endif
 
 //M109 target window - machine will deem to have reached target temperature when nozzle reaches Temp = target - NZONE.
-int nzone = 5;//2;
+int nzone = 5;//2
 
 //#define DEBUG_PID
 
 #define FAN_INIT 200
 
 // How often should the heater check for new temp readings, in milliseconds
-#define HEATER_CHECK_INTERVAL 112
-#define BED_CHECK_INTERVAL 5000
+//#define HEATER_CHECK_INTERVAL 112
+//#define BED_CHECK_INTERVAL 5000
 // Comment the following line to enable heat management during acceleration
 //#define DISABLE_CHECK_DURING_ACC
 #ifndef DISABLE_CHECK_DURING_ACC
@@ -176,21 +176,21 @@ int nzone = 5;//2;
 //#define WATCHPERIOD 5000 //5 seconds
 
 //// The minimal temperature defines the temperature below which the heater will not be enabled
-#define MINTEMP 5
+//#define MINTEMP 5
 
 //// Experimental max temp
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define MAXTEMP 300
+//#define MAXTEMP 300
 
 // Select one of these only to define how the nozzle temp is read.
-#define HEATER_USES_THERMISTOR
+//#define HEATER_USES_THERMISTOR
 //#define HEATER_USES_AD595
 //#define HEATER_USES_MAX6675
 
 // Select one of these only to define how the bed temp is read.
-#define BED_USES_THERMISTOR
+//#define BED_USES_THERMISTOR
 //#define BED_USES_AD595
 
 // Uncomment the following line to enable debugging. You can better control debugging below the following line
@@ -204,73 +204,6 @@ int nzone = 5;//2;
 //#define DEBUG_DISABLE_CHECK_DURING_TRAVEL //Debug the namesake feature, see above in this file
 #endif
 
-// Thermistor lookup table for RepRap Temperature Sensor Boards (http://reprap.org/wiki/Thermistor)
-// Made with the online thermistor table generator by nathan7 at http://calculator.josefprusa.cz/
-// r0: 100000
-// t0: 25
-// r1: 0
-// r2: 10000
-// beta: 3950
-// max adc: 1023
-#define NUMTEMPS        260-211+1
-#define OVERSAMPLENR    1
-short temptable[NUMTEMPS][2] =
-{
-         {1*OVERSAMPLENR,        938},
-         {31*OVERSAMPLENR,       314},
-         {41*OVERSAMPLENR,       290},
-         {51*OVERSAMPLENR,       272},
-         {61*OVERSAMPLENR,       258},
-         {71*OVERSAMPLENR,       247},
-         {81*OVERSAMPLENR,       237},
-         {91*OVERSAMPLENR,       229},
-         {101*OVERSAMPLENR,      221},
-         {111*OVERSAMPLENR,      215},
-         {121*OVERSAMPLENR,      209},
-         {131*OVERSAMPLENR,      204},
-         {141*OVERSAMPLENR,      199},
-         {151*OVERSAMPLENR,      195},
-         {161*OVERSAMPLENR,      190},
-         {171*OVERSAMPLENR,      187},
-         {181*OVERSAMPLENR,      183},
-         {191*OVERSAMPLENR,      179},
-         {201*OVERSAMPLENR,      176},
-         {221*OVERSAMPLENR,      170},
-         {241*OVERSAMPLENR,      165},
-         {261*OVERSAMPLENR,      160},
-         {281*OVERSAMPLENR,      155},
-         {301*OVERSAMPLENR,      150},
-         {331*OVERSAMPLENR,      144},
-         {361*OVERSAMPLENR,      139},
-         {391*OVERSAMPLENR,      133},
-         {421*OVERSAMPLENR,      128},
-         {451*OVERSAMPLENR,      123},
-         {491*OVERSAMPLENR,      117},
-         {531*OVERSAMPLENR,      111},
-         {571*OVERSAMPLENR,      105},
-         {611*OVERSAMPLENR,      100},
-         {641*OVERSAMPLENR,      95},
-         {681*OVERSAMPLENR,      90},
-         {711*OVERSAMPLENR,      85},
-         {751*OVERSAMPLENR,      79},
-         {791*OVERSAMPLENR,      72},
-         {811*OVERSAMPLENR,      69},
-         {831*OVERSAMPLENR,      65},
-         {871*OVERSAMPLENR,      57},
-         {881*OVERSAMPLENR,      55},
-         {901*OVERSAMPLENR,      51},
-         {921*OVERSAMPLENR,      45},
-         {941*OVERSAMPLENR,      39},
-         {971*OVERSAMPLENR,      28},
-         {981*OVERSAMPLENR,      23},
-         {991*OVERSAMPLENR,      17},
-         {1001*OVERSAMPLENR,     9},
-         {1021*OVERSAMPLENR,     -27}
-};
-
-#define BNUMTEMPS       NUMTEMPS
-#define bedtemptable    temptable
-
 
 
 /****************************************************************************************
@@ -280,29 +213,29 @@ short temptable[NUMTEMPS][2] =
 
 #define X_STEP_PIN         13
 #define X_DIR_PIN          3
+#define X_ENABLE_PIN       10
 
 #define Y_STEP_PIN         4
 #define Y_DIR_PIN          5
-
-#define Z_STEP_PIN         6
-#define Z_DIR_PIN          7
-
-#define E_STEP_PIN         8
-#define E_DIR_PIN          9
-
-
-#define X_ENABLE_PIN       10
 #define Y_ENABLE_PIN       10
-#define Z_ENABLE_PIN       11
-#define E_ENABLE_PIN       11
 
-#define Z_MIN_PIN     12
+#define Z_STEP_PIN         -1
+#define Z_DIR_PIN          -1
+#define Z_ENABLE_PIN       -1
+
+#define E_STEP_PIN        -1
+#define E_DIR_PIN          -1
+#define E_ENABLE_PIN       -1
+
+
+
 #define X_MIN_PIN     12
 #define Y_MIN_PIN     12
+#define Z_MIN_PIN     -1
 
 #define Z_MAX_PIN    -1
 #define Y_MAX_PIN    -1
-#define X_MAX_PIN    -2
+#define X_MAX_PIN    -1
 
 
 /*#define PROBE_PIN          11*/
