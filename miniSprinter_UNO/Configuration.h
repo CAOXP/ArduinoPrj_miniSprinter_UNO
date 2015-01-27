@@ -300,7 +300,7 @@ short temptable[NUMTEMPS][2] =
 
 #define Z_MAX_PIN    -1
 #define Y_MAX_PIN    -1
-#define X_MAX_PIN    -2
+#define X_MAX_PIN    -1
 
 
 /*#define PROBE_PIN          11*/
