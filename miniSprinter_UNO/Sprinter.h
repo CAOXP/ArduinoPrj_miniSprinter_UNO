@@ -27,10 +27,21 @@ int analog2tempu(int raw, const short table[][2], int numtemps, int source);
 #ifdef HEATER_USES_THERMISTOR
 #define HEATERSOURCE 1
 #endif
+#ifdef HEATER_USES_AD595
+#define HEATERSOURCE 2
+#endif
+#ifdef HEATER_USES_MAX6675
+#define HEATERSOURCE 3
+#endif
 #ifdef BED_USES_THERMISTOR
 #define BEDSOURCE 1
 #endif
-
+#ifdef BED_USES_AD595
+#define BEDSOURCE 2
+#endif
+#ifdef BED_USES_MAX6675
+#define BEDSOURCE 3
+#endif
 
 #define temp2analogh( c ) temp2analogu((c),temptable,NUMTEMPS,HEATERSOURCE)
 #define temp2analogBed( c ) temp2analogu((c),bedtemptable,BNUMTEMPS,BEDSOURCE)
