@@ -798,8 +798,10 @@ inline void process_commands()
             {
                 if(code_seen(axis_codes[i])) axis_steps_per_unit[i] = code_value();
             }
-
-
+            break;
+            
+        case 105: // M105
+            Serial.println("ok T:240 B:30");	//test
             break;
         case 115: // M115
             //Serial.print("FIRMWARE_NAME:Sprinter FIRMWARE_URL:http%%3A/github.com/kliment/Sprinter/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Mendel EXTRUDER_COUNT:1 UUID:");
@@ -816,6 +818,7 @@ inline void process_commands()
             // Serial.print(current_position[2]);
             // Serial.print("E:");
             // Serial.println(current_position[3]);
+            Serial.println();
             break;
         case 119: // M119
 #if (X_MIN_PIN > -1)
