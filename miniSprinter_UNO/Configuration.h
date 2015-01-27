@@ -308,16 +308,16 @@ short temptable[NUMTEMPS][2] =
 /*#define PROBE_PIN          11*/
 
 #define LED_PIN            -1
-#define FAN_PIN            13
+#define FAN_PIN            -1
 
 #define PS_ON_PIN    -1
 #define KILL_PIN     -1
 
-#define HEATER_0_PIN       14 // (extruder)
-#define HEATER_1_PIN       15 // (bed)
+#define HEATER_0_PIN       -1 // (extruder)
+#define HEATER_1_PIN       -1 // (bed)
 
-#define TEMP_0_PIN          16   // 14=A0  MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 33 extruder)
-#define TEMP_1_PIN          17   // MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 34 bed)
+#define TEMP_0_PIN          -1   // 14=A0  MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 33 extruder)
+#define TEMP_1_PIN          -1   // MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 34 bed)
 
 // UNO
 // A0 14
